@@ -105,6 +105,17 @@ class EventsPresenter {
             // TODO: display error of some sort
          }
     }
+    
+    func share(_ shareableEvent: ShareableEvent, _ index: Int) {
+        let event = self.events[index]
+        
+        let start = String(event.start.dropLast(3))
+        let month = Date.monthFromUTCString(start)
+        let day = Date.dayFromUTCString(start)
+        let year = Date.yearFromUTCString(start)
+        
+        self.delegate?.shareEvent("\(event.summary) \(month)/\(day)/\(year)", data: shareableEvent.data, mimeType: "image/png")
+    }
 }
 
 // MARK: - Private

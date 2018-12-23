@@ -17,6 +17,9 @@ enum MapButtonType {
     case none
 }
 
+// - Type for a shared event
+typealias ShareableEvent = (data: Data, mime: String)
+
 class EventView: UIView {
 
     // - Subviews
@@ -33,9 +36,20 @@ class EventView: UIView {
         button.layer.borderColor = UIColor.darkGray.cgColor
         button.layer.borderWidth = 1.0
         button.setImage(UIImage.init(named: "maps"), for: .normal)
-        button.imageView?.contentMode = .scaleToFill
         button.backgroundColor = UIColor.white
         button.addTarget(self, action: #selector(handleMap), for: .touchUpInside)
+        return button
+    }()
+    
+    fileprivate lazy var shareButton: UIButton = {
+        let button = UIButton.init(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.borderColor = UIColor.darkGray.cgColor
+        button.layer.borderWidth = 1.0
+        button.setImage(CommonImages.share.image?.resizedImage(newSize: CGSize.init(width: 32.0, height: 32.0)), for: .normal)
+        button.contentMode = .center
+        button.backgroundColor = UIColor.white
+        button.addTarget(self, action: #selector(share), for: .touchUpInside)
         return button
     }()
     
@@ -100,6 +114,9 @@ class EventView: UIView {
     // - Map button handler
     var mapButtonHandler: ((_ type: MapButtonType) -> ())?
     
+    // - Share button handler
+    var shareButtonHandler: ((_ event: ShareableEvent) -> ())?
+    
     init() {
         super.init(frame: .zero)
         self.layout()
@@ -116,13 +133,26 @@ class EventView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        // - Make the map button circular
+        // - Make the map button circular along with the share button
         self.mapButton.layer.cornerRadius = self.mapButton.bounds.width / 2.0
+        self.shareButton.layer.cornerRadius = self.shareButton.bounds.width / 2.0
     }
     
     // - Map button handler
     @objc func handleMap() {
         self.mapButtonHandler?(UIApplication.shared.supportedMaps())
+    }
+    
+    // - Share button handler
+    @objc func share() {
+        self.mapButton.isHidden = true
+        self.shareButton.isHidden = true
+        if let data = self.snapshot().pngData() {
+            self.shareButtonHandler?((data, "image/png"))
+        }
+        
+        self.mapButton.isHidden = false
+        self.shareButton.isHidden = false
     }
 }
 
@@ -174,9 +204,16 @@ fileprivate extension EventView {
         
         // - Add the map button
         self.addSubview(self.mapButton)
-        self.mapButton.centerYAnchor.constraint(equalTo: self.containerView.topAnchor).isActive = true
-        self.mapButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -24.0).isActive = true
+        self.mapButton.centerYAnchor.constraint(equalTo: self.containerView.topAnchor, constant: -8.0).isActive = true
+        self.mapButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -74.0).isActive = true
         self.mapButton.heightAnchor.constraint(equalToConstant: 44.0).isActive = true
         self.mapButton.widthAnchor.constraint(equalToConstant: 44.0).isActive = true
+        
+        // - Add the share button
+        self.addSubview(self.shareButton)
+        self.shareButton.centerYAnchor.constraint(equalTo: self.mapButton.centerYAnchor, constant: 0).isActive = true
+        self.shareButton.leadingAnchor.constraint(equalTo: self.mapButton.trailingAnchor, constant: 10.0).isActive = true
+        self.shareButton.heightAnchor.constraint(equalToConstant: 44.0).isActive = true
+        self.shareButton.widthAnchor.constraint(equalToConstant: 44.0).isActive = true
     }
 }

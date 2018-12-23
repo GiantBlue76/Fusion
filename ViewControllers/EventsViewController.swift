@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 import wvslib
 
 // - Event type for use within the table view
@@ -21,8 +22,7 @@ struct ViewEvent {
     let posterUrl: String
 }
 
-class EventsViewController: UIViewController {
-    
+class EventsViewController: UIViewController, Shareable, UIPopoverPresentationControllerDelegate {
     // - Header view
     fileprivate lazy var bannerView: UIView = {
         let banner = UIView.init()
@@ -57,6 +57,9 @@ class EventsViewController: UIViewController {
         eventView.dateBoxView.backgroundColor = UIColor.white
         eventView.mapButtonHandler = { [weak self] (type) in
             self?.presenter.map(type, 0)
+        }
+        eventView.shareButtonHandler = { [weak self] (shareable) in
+            self?.presenter.share(shareable, 0)
         }
         
         // - Add the event to the header
@@ -110,6 +113,22 @@ class EventsViewController: UIViewController {
             self.configureEventView(nextEvent, eventView)
         }
     }
+    
+    // MARK: - Shareable
+
+    var supportedShareTypes: [ShareType] = [.sms]
+    
+    // - Shareable data
+    var shareData: Data?
+    
+    // - Shareable name
+    var name: String? = "event"
+    
+    // - The mimetype for the message
+    var mimeType: String?
+
+    // - The body for the shareable message
+    var body: String?
     
     init(withPresenter presenter: EventsPresenter) {
         self.presenter = presenter
@@ -219,6 +238,13 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 self?.presenter.map(type, indexPath.row + 1)
             }
+            eventView.shareButtonHandler = { [weak self] (shareable) in
+                guard let indexPath = self?.tableView.indexPath(for: cell) else {
+                    log.warning("The index path could not be found for the cell to invoke the map button.")
+                    return
+                }
+                self?.presenter.share(shareable, indexPath.row + 1)
+            }
         }
 
         // - Handle map selection
@@ -264,6 +290,8 @@ extension EventsViewController: EventsDelegate {
                 UIApplication.shared.open(google, options: [:])
             }))
             
+            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+            
             self.present(alert, animated: true)
         }
         else if let google = googleMap {
@@ -271,6 +299,67 @@ extension EventsViewController: EventsDelegate {
         }
         else if let apple = appleMap {
             UIApplication.shared.open(apple, options: [:])
+        }
+    }
+    
+    func shareEvent(_ body: String, data: Data, mimeType: String) {
+        self.body = body
+        self.shareData = data
+        self.mimeType = mimeType
+        self.share()
+    }
+}
+
+// MARK: - MFMessageComposeViewControllerDelegate
+
+extension EventsViewController: MFMessageComposeViewControllerDelegate {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        var message: String?
+        switch result {
+            case .failed:
+                message = "The event could not be sent.  Please try again later."
+            
+            case .sent:
+                fallthrough
+            
+            default:
+                break
+        }
+        
+        // - Notify the user with any pertinent info
+        controller.dismiss(animated: true) {
+            if let message = message {
+                let alert = UIAlertController.init(title: "Event Share", message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+}
+
+// MARK: - MFMailComposeViewControllerDelegate
+
+extension EventsViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        var message: String?
+        switch result {
+            case .failed:
+                message = "This event could not be sent. \(error?.localizedDescription ?? "")"
+            
+            case .sent:
+                fallthrough
+            
+            default:
+                break
+        }
+        
+        // - Notify the user that the email was sent
+        controller.dismiss(animated: true) {
+            if let message = message {
+                let alert = UIAlertController.init(title: "Event Share", message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
 }
@@ -282,15 +371,15 @@ fileprivate extension EventsViewController {
         // - Add the header
         self.view.addSubview(self.headerView)
         self.headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        self.headerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        self.headerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        self.headerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        self.headerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         
         // - Add the table view
         self.view.addSubview(self.tableView)
         self.tableView.topAnchor.constraint(equalTo: self.headerView.bottomAnchor).isActive = true
-        self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        self.tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        self.tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        self.tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
     func configureEventView(_ event: ViewEvent, _ eventView: EventView) {
