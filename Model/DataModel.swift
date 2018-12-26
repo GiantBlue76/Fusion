@@ -31,8 +31,8 @@ struct Song: Codable {
 // - MARK: - Band Member
 struct Member: Codable {
     let name: String
-    let imageUrl: String
-    let thumbnailUrl: String
+    let image: String
+    let thumb: String
     let instrument: String
     let bio: String
 }

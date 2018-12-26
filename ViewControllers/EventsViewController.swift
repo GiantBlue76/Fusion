@@ -22,12 +22,12 @@ struct ViewEvent {
     let posterUrl: String
 }
 
-class EventsViewController: UIViewController, Shareable, UIPopoverPresentationControllerDelegate {
+class EventsViewController: UIViewController, Shareable, Notifiable, UIPopoverPresentationControllerDelegate {
     // - Header view
     fileprivate lazy var bannerView: UIView = {
         let banner = UIView.init()
         banner.translatesAutoresizingMaskIntoConstraints = false
-        banner.backgroundColor = UIColor.colorWithHexValue(hex: "329e27", alpha: 1.0)
+        banner.backgroundColor = UIColor.sharedBlue
         
         let bannerLabel = UILabel.init()
         bannerLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -115,8 +115,7 @@ class EventsViewController: UIViewController, Shareable, UIPopoverPresentationCo
     }
     
     // MARK: - Shareable
-
-    var supportedShareTypes: [ShareType] = [.sms]
+    var supportedShareTypes: [ShareType] = [.email, .sms]
     
     // - Shareable data
     var shareData: Data?
@@ -129,6 +128,12 @@ class EventsViewController: UIViewController, Shareable, UIPopoverPresentationCo
 
     // - The body for the shareable message
     var body: String?
+    
+    // - The subject for the shareable
+    var subject: String?
+    
+    // MARK: - Notifiable
+    var notifyContainer: UIView?
     
     init(withPresenter presenter: EventsPresenter) {
         self.presenter = presenter
@@ -155,9 +160,15 @@ class EventsViewController: UIViewController, Shareable, UIPopoverPresentationCo
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        log.verbose("***** Deallocated view controller: \(EventsViewController.self) *****")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.navigationController?.isNavigationBarHidden = false
+        
         // - Hide controls until data is loaded
         self.headerView.isHidden = true
         self.tableView.isHidden = true
@@ -302,8 +313,9 @@ extension EventsViewController: EventsDelegate {
         }
     }
     
-    func shareEvent(_ body: String, data: Data, mimeType: String) {
+    func shareEvent(_ body: String, _ subject: String, data: Data, mimeType: String) {
         self.body = body
+        self.subject = subject
         self.shareData = data
         self.mimeType = mimeType
         self.share()
@@ -326,12 +338,19 @@ extension EventsViewController: MFMessageComposeViewControllerDelegate {
                 break
         }
         
+        self.hideSpinner()
+        
         // - Notify the user with any pertinent info
         controller.dismiss(animated: true) {
             if let message = message {
                 let alert = UIAlertController.init(title: "Event Share", message: message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
+            }
+            else if result == .sent {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                    self.notify(message: "This event was shared successfully.", 2.5, UIColor.sharedBlue)
+                })
             }
         }
     }
@@ -353,12 +372,19 @@ extension EventsViewController: MFMailComposeViewControllerDelegate {
                 break
         }
         
+        self.hideSpinner()
+        
         // - Notify the user that the email was sent
         controller.dismiss(animated: true) {
             if let message = message {
                 let alert = UIAlertController.init(title: "Event Share", message: message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
+            }
+            else if result == .sent {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                    self.notify(message: "This event was shared successfully.", 2.5, UIColor.sharedBlue)
+                })
             }
         }
     }

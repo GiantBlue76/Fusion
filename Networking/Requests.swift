@@ -31,3 +31,24 @@ struct EventsRequest: Request {
 }
 
 // - Songs
+
+// - Members
+struct MembersRequest: Request {
+    typealias T = Data
+
+    var id: String {
+        return "membersRequest_\(UUID.init().uuidString)"
+    }
+    
+    var relativePath: String {
+        return "/members.json"
+    }
+    
+    var method: httpMethod {
+        return .get
+    }
+    
+    func onSuccess(_ data: Data) -> Data {
+        return data
+    }
+}

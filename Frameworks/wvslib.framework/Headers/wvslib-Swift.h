@@ -163,7 +163,9 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # define SWIFT_DEPRECATED_OBJC(Msg) SWIFT_DEPRECATED_MSG(Msg)
 #endif
 #if __has_feature(modules)
+@import CoreGraphics;
 @import Foundation;
+@import ObjectiveC;
 @import UIKit;
 #endif
 
@@ -182,9 +184,67 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma pop_macro("any")
 #endif
 
+@class NSCoder;
+
+SWIFT_CLASS("_TtC6wvslib10ButtonMenu")
+@interface ButtonMenu : UIView
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
+- (void)layoutSubviews;
+@end
 
 
 
+
+
+
+
+
+SWIFT_CLASS("_TtC6wvslib27SlideInPresentationAnimator")
+@interface SlideInPresentationAnimator : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
+@protocol UIViewControllerContextTransitioning;
+
+@interface SlideInPresentationAnimator (SWIFT_EXTENSION(wvslib)) <UIViewControllerAnimatedTransitioning>
+- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning> _Nullable)transitionContext SWIFT_WARN_UNUSED_RESULT;
+- (void)animateTransition:(id <UIViewControllerContextTransitioning> _Nonnull)transitionContext;
+@end
+
+@protocol UIContentContainer;
+@class UIViewController;
+
+SWIFT_CLASS("_TtC6wvslib29SlideInPresentationController")
+@interface SlideInPresentationController : UIPresentationController
+@property (nonatomic, readonly) CGRect frameOfPresentedViewInContainerView;
+- (void)presentationTransitionWillBegin;
+- (void)dismissalTransitionWillBegin;
+- (void)containerViewWillLayoutSubviews;
+- (CGSize)sizeForChildContentContainer:(id <UIContentContainer> _Nonnull)container withParentContainerSize:(CGSize)parentSize SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)initWithPresentedViewController:(UIViewController * _Nonnull)presentedViewController presentingViewController:(UIViewController * _Nullable)presentingViewController SWIFT_UNAVAILABLE;
+@end
+
+
+SWIFT_CLASS("_TtC6wvslib26SlideInPresentationManager")
+@interface SlideInPresentationManager : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class UITraitCollection;
+
+@interface SlideInPresentationManager (SWIFT_EXTENSION(wvslib)) <UIAdaptivePresentationControllerDelegate>
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController * _Nonnull)controller traitCollection:(UITraitCollection * _Nonnull)traitCollection SWIFT_WARN_UNUSED_RESULT;
+- (UIViewController * _Nullable)presentationController:(UIPresentationController * _Nonnull)controller viewControllerForAdaptivePresentationStyle:(UIModalPresentationStyle)style SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+@interface SlideInPresentationManager (SWIFT_EXTENSION(wvslib)) <UIViewControllerTransitioningDelegate>
+- (UIPresentationController * _Nullable)presentationControllerForPresentedViewController:(UIViewController * _Nonnull)presented presentingViewController:(UIViewController * _Nullable)presenting sourceViewController:(UIViewController * _Nonnull)source SWIFT_WARN_UNUSED_RESULT;
+- (id <UIViewControllerAnimatedTransitioning> _Nullable)animationControllerForDismissedController:(UIViewController * _Nonnull)dismissed SWIFT_WARN_UNUSED_RESULT;
+- (id <UIViewControllerAnimatedTransitioning> _Nullable)animationControllerForPresentedController:(UIViewController * _Nonnull)presented presentingController:(UIViewController * _Nonnull)presenting sourceController:(UIViewController * _Nonnull)source SWIFT_WARN_UNUSED_RESULT;
+@end
 
 
 

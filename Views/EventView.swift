@@ -46,7 +46,7 @@ class EventView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.borderColor = UIColor.darkGray.cgColor
         button.layer.borderWidth = 1.0
-        button.setImage(CommonImages.share.image?.resizedImage(newSize: CGSize.init(width: 32.0, height: 32.0)), for: .normal)
+        button.setImage(CommonImages.share.image?.resizedImage(newSize: CGSize.init(width: 32.0, height: 32.0))?.maskedImage(with: UIColor.sharedBlue), for: .normal)
         button.contentMode = .center
         button.backgroundColor = UIColor.white
         button.addTarget(self, action: #selector(share), for: .touchUpInside)
@@ -206,14 +206,14 @@ fileprivate extension EventView {
         self.addSubview(self.mapButton)
         self.mapButton.centerYAnchor.constraint(equalTo: self.containerView.topAnchor, constant: -8.0).isActive = true
         self.mapButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -74.0).isActive = true
-        self.mapButton.heightAnchor.constraint(equalToConstant: 44.0).isActive = true
-        self.mapButton.widthAnchor.constraint(equalToConstant: 44.0).isActive = true
+        self.mapButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
+        self.mapButton.widthAnchor.constraint(equalToConstant: 48.0).isActive = true
         
         // - Add the share button
         self.addSubview(self.shareButton)
         self.shareButton.centerYAnchor.constraint(equalTo: self.mapButton.centerYAnchor, constant: 0).isActive = true
         self.shareButton.leadingAnchor.constraint(equalTo: self.mapButton.trailingAnchor, constant: 10.0).isActive = true
-        self.shareButton.heightAnchor.constraint(equalToConstant: 44.0).isActive = true
-        self.shareButton.widthAnchor.constraint(equalToConstant: 44.0).isActive = true
+        self.shareButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
+        self.shareButton.widthAnchor.constraint(equalToConstant: 48.0).isActive = true
     }
 }

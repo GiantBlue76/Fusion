@@ -21,9 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // - Create the main window
         window = UIWindow.init(frame: UIScreen.main.bounds)
         
+        // - Configure the navigation controller
+        let nav = SharedNavigationController.init(rootViewController: HomeViewController.init(withPresenter: HomePresenter()))
+
         // - Set the root to be the events view
-        window?.rootViewController = EventsViewController(withPresenter: EventsPresenter.init())
-        
+        window?.rootViewController = nav
+
         // - Present the main window
         window?.makeKeyAndVisible()
         
@@ -52,7 +55,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 

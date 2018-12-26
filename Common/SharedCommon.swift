@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import wvslib
 
 extension UIApplication {
     func supportedMaps() -> MapButtonType {
@@ -52,30 +53,10 @@ extension UIFont {
     }
 }
 
-extension UIImage {
-    func resizedImage(newSize: CGSize) -> UIImage? {
-        // Guard newSize is different
-        guard self.size != newSize else { return self }
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
-
-        self.draw(in: CGRect.init(x: 0, y: 0, width: newSize.width, height: newSize.height))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-
-        UIGraphicsEndImageContext()
-        return newImage
-    }
-    
-    func resizedImageWithinRect(rectSize: CGSize) -> UIImage? {
-        let widthFactor = size.width / rectSize.width
-        let heightFactor = size.height / rectSize.height
-        
-        var resizeFactor = widthFactor
-        if size.height > size.width {
-            resizeFactor = heightFactor
-        }
-        
-        let newSize = CGSize.init(width: size.width / resizeFactor, height: size.height / resizeFactor)
-        let resized = resizedImage(newSize: newSize)
-        return resized
+extension UIColor {
+    class var sharedBlue: UIColor {
+        return UIColor.colorWithHexValue(hex: "289bf3", alpha: 1.0)
     }
 }
+
+extension UICollectionView: Waitable {}

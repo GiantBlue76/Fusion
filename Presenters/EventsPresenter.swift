@@ -114,7 +114,7 @@ class EventsPresenter {
         let day = Date.dayFromUTCString(start)
         let year = Date.yearFromUTCString(start)
         
-        self.delegate?.shareEvent("\(event.summary) \(month)/\(day)/\(year)", data: shareableEvent.data, mimeType: "image/png")
+        self.delegate?.shareEvent("\(event.summary) \(month)/\(day)/\(year)", event.summary, data: shareableEvent.data, mimeType: "image/png")
     }
 }
 

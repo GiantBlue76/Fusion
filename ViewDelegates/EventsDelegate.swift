@@ -21,6 +21,6 @@ protocol EventsDelegate: Waitable {
     func openMaps(_ appleMap: URL?, _ googleMap: URL?)
     
     // - Handle the share action
-    func shareEvent(_ body: String, data: Data, mimeType: String)
+    func shareEvent(_ body: String, _ subject: String, data: Data, mimeType: String)
     
 }
