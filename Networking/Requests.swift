@@ -31,6 +31,25 @@ struct EventsRequest: Request {
 }
 
 // - Songs
+struct SongsRequest: Request {
+    typealias T = Data
+    
+    var id: String {
+        return "songsRequest\(UUID.init().uuidString)"
+    }
+    
+    var relativePath: String {
+        return "/songs.json"
+    }
+    
+    var method: httpMethod {
+        return .get
+    }
+    
+    func onSuccess(_ data: Data) -> Data {
+        return data
+    }
+}
 
 // - Members
 struct MembersRequest: Request {

@@ -20,6 +20,9 @@ protocol HomeDelegate: Waitable {
     // - Segue to the events view
     func eventsSelected(_ presenter: EventsPresenter)
     
+    // - Segue to the songs view
+    func songsSelected(_ presenter: SongsPresenter)
+    
     // - Notify the view when a band member is selected
     func memberSelected(_ memberInfo: MemberInfo)
 }

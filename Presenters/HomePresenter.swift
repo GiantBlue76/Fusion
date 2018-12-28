@@ -33,6 +33,9 @@ class HomePresenter {
             case 0:
                 self.delegate?.eventsSelected(EventsPresenter.init())
             
+            case 1:
+                self.delegate?.songsSelected(SongsPresenter.init())
+            
             default:
                 break
         }

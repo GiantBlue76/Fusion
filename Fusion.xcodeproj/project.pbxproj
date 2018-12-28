@@ -17,6 +17,11 @@
 		133D84FE21C8CD0500B3300A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 133D84FC21C8CD0500B3300A /* LaunchScreen.storyboard */; };
 		13A3AA1D21D0C80F00D8D5E0 /* SharedNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A3AA1C21D0C80F00D8D5E0 /* SharedNavigationController.swift */; };
 		13A3AA2121D3D1DD00D8D5E0 /* BioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A3AA2021D3D1DD00D8D5E0 /* BioViewController.swift */; };
+		13A3AA2C21D4569E00D8D5E0 /* SongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A3AA2B21D4569E00D8D5E0 /* SongsViewController.swift */; };
+		13A3AA2E21D456AB00D8D5E0 /* SongsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A3AA2D21D456AB00D8D5E0 /* SongsPresenter.swift */; };
+		13A3AA3021D456C500D8D5E0 /* SongsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A3AA2F21D456C500D8D5E0 /* SongsDataSource.swift */; };
+		13A3AA3221D456D800D8D5E0 /* SongsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A3AA3121D456D800D8D5E0 /* SongsDelegate.swift */; };
+		13A3AA3421D5215C00D8D5E0 /* SongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A3AA3321D5215C00D8D5E0 /* SongView.swift */; };
 		13B588A921CAA9CB00B562BD /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588A821CAA9CB00B562BD /* DataModel.swift */; };
 		13B588AB21CAB0D100B562BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588AA21CAB0D100B562BD /* HomeViewController.swift */; };
 		13B588AD21CAB2B500B562BD /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588AC21CAB2B500B562BD /* EventsViewController.swift */; };
@@ -59,6 +64,11 @@
 		133D84FF21C8CD0500B3300A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13A3AA1C21D0C80F00D8D5E0 /* SharedNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedNavigationController.swift; sourceTree = "<group>"; };
 		13A3AA2021D3D1DD00D8D5E0 /* BioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioViewController.swift; sourceTree = "<group>"; };
+		13A3AA2B21D4569E00D8D5E0 /* SongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsViewController.swift; sourceTree = "<group>"; };
+		13A3AA2D21D456AB00D8D5E0 /* SongsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsPresenter.swift; sourceTree = "<group>"; };
+		13A3AA2F21D456C500D8D5E0 /* SongsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsDataSource.swift; sourceTree = "<group>"; };
+		13A3AA3121D456D800D8D5E0 /* SongsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsDelegate.swift; sourceTree = "<group>"; };
+		13A3AA3321D5215C00D8D5E0 /* SongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongView.swift; sourceTree = "<group>"; };
 		13B588A821CAA9CB00B562BD /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		13B588AA21CAB0D100B562BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		13B588AC21CAB2B500B562BD /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
@@ -97,20 +107,20 @@
 		133D84E521C8CD0400B3300A = {
 			isa = PBXGroup;
 			children = (
-				133C281021D0379F008551A5 /* Custom */,
-				13B588ED21CB8BA500B562BD /* wvslib.framework */,
-				13B588BC21CAF6C000B562BD /* ViewDelegates */,
-				13B588B121CAD45A00B562BD /* Events.playground */,
 				13B588AE21CAB35500B562BD /* Common */,
+				133C281021D0379F008551A5 /* Custom */,
 				13B588A721CAA9B400B562BD /* DataSources */,
+				13B588B121CAD45A00B562BD /* Events.playground */,
+				133D84F021C8CD0400B3300A /* Fusion */,
 				133D850D21C8CF2100B3300A /* Model */,
 				133D850C21C8CF1600B3300A /* Networking */,
-				133D850B21C8CF1100B3300A /* Protocols */,
 				133D850A21C8CF0B00B3300A /* Presenters */,
-				133D850921C8CF0400B3300A /* ViewControllers */,
-				13B588B221CAEA6A00B562BD /* Views */,
-				133D84F021C8CD0400B3300A /* Fusion */,
 				133D84EF21C8CD0400B3300A /* Products */,
+				133D850B21C8CF1100B3300A /* Protocols */,
+				133D850921C8CF0400B3300A /* ViewControllers */,
+				13B588BC21CAF6C000B562BD /* ViewDelegates */,
+				13B588B221CAEA6A00B562BD /* Views */,
+				13B588ED21CB8BA500B562BD /* wvslib.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -140,6 +150,7 @@
 				13B588AC21CAB2B500B562BD /* EventsViewController.swift */,
 				13A3AA1C21D0C80F00D8D5E0 /* SharedNavigationController.swift */,
 				13A3AA2021D3D1DD00D8D5E0 /* BioViewController.swift */,
+				13A3AA2B21D4569E00D8D5E0 /* SongsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -149,6 +160,7 @@
 			children = (
 				13B588BF21CAF76900B562BD /* EventsPresenter.swift */,
 				133C280A21D0198B008551A5 /* HomePresenter.swift */,
+				13A3AA2D21D456AB00D8D5E0 /* SongsPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -181,6 +193,7 @@
 			children = (
 				13B588C521CB686300B562BD /* EventsDataSource.swift */,
 				133C280E21D019ED008551A5 /* BandDataSource.swift */,
+				13A3AA2F21D456C500D8D5E0 /* SongsDataSource.swift */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -200,6 +213,7 @@
 				13B588C321CB597600B562BD /* HeaderView.swift */,
 				13B588F221CB93CB00B562BD /* ErrorView.swift */,
 				133C280821D012C6008551A5 /* MemberView.swift */,
+				13A3AA3321D5215C00D8D5E0 /* SongView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -209,6 +223,7 @@
 			children = (
 				13B588BD21CAF6E100B562BD /* EventsDelegate.swift */,
 				133C280C21D019B0008551A5 /* HomeDelegate.swift */,
+				13A3AA3121D456D800D8D5E0 /* SongsDelegate.swift */,
 			);
 			path = ViewDelegates;
 			sourceTree = "<group>";
@@ -287,9 +302,11 @@
 				13B588AB21CAB0D100B562BD /* HomeViewController.swift in Sources */,
 				13B588C421CB597600B562BD /* HeaderView.swift in Sources */,
 				13B588CA21CB6A6D00B562BD /* Requests.swift in Sources */,
+				13A3AA3421D5215C00D8D5E0 /* SongView.swift in Sources */,
 				13B588A921CAA9CB00B562BD /* DataModel.swift in Sources */,
 				13B588BE21CAF6E100B562BD /* EventsDelegate.swift in Sources */,
 				133C280D21D019B0008551A5 /* HomeDelegate.swift in Sources */,
+				13A3AA3221D456D800D8D5E0 /* SongsDelegate.swift in Sources */,
 				13A3AA2121D3D1DD00D8D5E0 /* BioViewController.swift in Sources */,
 				13B588B021CAB56000B562BD /* SharedCommon.swift in Sources */,
 				133D84F221C8CD0400B3300A /* AppDelegate.swift in Sources */,
@@ -298,9 +315,12 @@
 				13B588F321CB93CB00B562BD /* ErrorView.swift in Sources */,
 				13B588C021CAF76900B562BD /* EventsPresenter.swift in Sources */,
 				13B588B421CAEA9100B562BD /* EventView.swift in Sources */,
+				13A3AA2E21D456AB00D8D5E0 /* SongsPresenter.swift in Sources */,
 				133C280921D012C6008551A5 /* MemberView.swift in Sources */,
 				13B588AD21CAB2B500B562BD /* EventsViewController.swift in Sources */,
 				13B588C621CB686300B562BD /* EventsDataSource.swift in Sources */,
+				13A3AA2C21D4569E00D8D5E0 /* SongsViewController.swift in Sources */,
+				13A3AA3021D456C500D8D5E0 /* SongsDataSource.swift in Sources */,
 				133C280F21D019ED008551A5 /* BandDataSource.swift in Sources */,
 				133C281221D03813008551A5 /* TileLayout.swift in Sources */,
 			);

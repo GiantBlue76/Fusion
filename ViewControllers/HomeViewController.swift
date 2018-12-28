@@ -11,6 +11,10 @@ import wvslib
 
 class HomeViewController: UIViewController {
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return UIDevice.current.sizeClass == .compact ? .portrait : .all
+    }
+    
     // - Header view for the home
     fileprivate lazy var headerView: UIView = {
         let view = UIView.init()
@@ -167,6 +171,14 @@ class HomeViewController: UIViewController {
         self.isLoaded = true
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: { (_) in
+        }) { (_) in
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
@@ -267,6 +279,10 @@ extension HomeViewController: HomeDelegate {
     
     func eventsSelected(_ presenter: EventsPresenter) {
         self.navigationController?.pushViewController(EventsViewController.init(withPresenter: presenter), animated: true)
+    }
+    
+    func songsSelected(_ presenter: SongsPresenter) {
+        self.navigationController?.pushViewController(SongsViewController.init(withPresenter: presenter), animated: true)
     }
     
     func memberSelected(_ memberInfo: MemberInfo) {

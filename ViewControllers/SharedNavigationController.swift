@@ -49,7 +49,6 @@ class SharedNavigationController: UINavigationController {
         // - If this is the first view controller on the stack then we don't add the back button
         if self.viewControllers.first != controller {
             controller.navigationItem.leftBarButtonItem = backItem
-            controller.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.sharedBlue]
         }
     }
     

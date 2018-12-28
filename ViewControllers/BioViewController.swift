@@ -11,6 +11,10 @@ import wvslib
 
 class BioViewController: UIViewController {
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return UIDevice.current.sizeClass == .compact ? .portrait : .all
+    }
+
     // - Subviews
     lazy var imageView: UIImageView = {
         let view = UIImageView()
@@ -34,7 +38,6 @@ class BioViewController: UIViewController {
         let view = UIView.init()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.sharedBlue
-        view.layer.cornerRadius = 5.0
         return view
     }()
     
@@ -73,6 +76,11 @@ class BioViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.clear
         
+        // - Add swipe listener
+        let swipeDown = UISwipeGestureRecognizer.init(target: self, action: #selector(handleSwipe(_:)))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
+        
         self.layout()
     }
     
@@ -81,12 +89,28 @@ class BioViewController: UIViewController {
         
         DispatchQueue.main.async {
             self.imageView.layer.cornerRadius = self.imageView.bounds.width / 2.0
+            self.contentView.layer.addBorder(.top, UIColor.lightGray, 1.0)
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.textView.animateScrollViewBound(.vertical)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate(alongsideTransition: { (_) in
+
+        }) { (_) in
+
+        }
+    }
+    
+    // - Actions
+    @objc fileprivate func handleSwipe(_ swipe: UISwipeGestureRecognizer) {
+        self.dismiss(animated: true)
     }
 }
 
