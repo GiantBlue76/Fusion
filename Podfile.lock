@@ -1,0 +1,22 @@
+PODS:
+  - wvslib (0.1.0)
+
+DEPENDENCIES:
+  - wvslib (from `https://github.com/giantblue76/wvslib.git`, branch `master`)
+
+EXTERNAL SOURCES:
+  wvslib:
+    :branch: master
+    :git: https://github.com/giantblue76/wvslib.git
+
+CHECKOUT OPTIONS:
+  wvslib:
+    :commit: 0211feefbe1dd691c11d85d6c26e01a9949b4261
+    :git: https://github.com/giantblue76/wvslib.git
+
+SPEC CHECKSUMS:
+  wvslib: 6688581dad01734f61b4676ff1c44a3a6056d03e
+
+PODFILE CHECKSUM: 25d3bf685c750fffe857e9f6d20da73a519b4d2e
+
+COCOAPODS: 1.5.3
