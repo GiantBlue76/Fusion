@@ -11,11 +11,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   wvslib:
-    :commit: ed408f27e538e900bb4661920d671aef0c9bf170
+    :commit: 346ee6612b8d7817af15dd7d281d4b95717cb9a9
     :git: https://github.com/giantblue76/wvslib.git
 
 SPEC CHECKSUMS:
-  wvslib: 6688581dad01734f61b4676ff1c44a3a6056d03e
+  wvslib: 272f43bd9b35b97a0bf3baa9e7d7d8748670d278
 
 PODFILE CHECKSUM: 25d3bf685c750fffe857e9f6d20da73a519b4d2e
 
