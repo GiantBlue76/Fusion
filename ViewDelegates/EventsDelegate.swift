@@ -23,4 +23,6 @@ protocol EventsDelegate: Waitable {
     // - Handle the share action
     func shareEvent(_ body: String, _ subject: String, data: Data, mimeType: String)
     
+    // - Schedule a local notification
+    func scheduleReminder(_ date: String, _ location: String)
 }

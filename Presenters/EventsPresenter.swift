@@ -64,6 +64,18 @@ class EventsPresenter {
                 })
                 
                 self.delegate?.eventsLoaded(viewEvents)
+                
+                // - Schedule a reminder notification
+                if let firstEvent = self.events.first {
+                    var start = firstEvent.start
+                    if firstEvent.start.hasSuffix(" UTC") {
+                        start = String(firstEvent.start.dropLast(4))
+                    }
+                    
+                    let venue = self.venues.filter({ return $0.id == firstEvent.venueId }).first?.name ?? ""
+                    self.delegate?.scheduleReminder(start, venue)
+                }
+                
             }) { (error) in
                 self.delegate?.hideSpinner()
                 

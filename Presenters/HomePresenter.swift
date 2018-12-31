@@ -36,6 +36,9 @@ class HomePresenter {
             case 1:
                 self.delegate?.songsSelected(SongsPresenter.init())
             
+            case 2:
+                self.delegate?.showContact()
+            
             default:
                 break
         }

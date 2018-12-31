@@ -25,4 +25,8 @@ protocol HomeDelegate: Waitable {
     
     // - Notify the view when a band member is selected
     func memberSelected(_ memberInfo: MemberInfo)
+        
+    // - Notify the view to display the contact view
+    func showContact()
+
 }

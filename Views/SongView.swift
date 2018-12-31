@@ -57,14 +57,23 @@ class SongHeaderView: UITableViewHeaderFooterView {
 
 fileprivate extension SongHeaderView {
     func layout() {
-        self.addSubview(self.headerLabel)
-        self.headerLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8.0).isActive = true
-        self.headerLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12.0).isActive = true
+        let topBorder = UIView.init()
+        topBorder.translatesAutoresizingMaskIntoConstraints = false
+        topBorder.backgroundColor = UIColor.darkGray
         
-        self.addSubview(self.expandImageView)
-        self.expandImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12.0).isActive = true
+        self.contentView.addSubview(topBorder)
+        topBorder.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0).isActive = true
+        topBorder.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
+        topBorder.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
+        topBorder.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
+        
+        self.contentView.addSubview(self.headerLabel)
+        self.headerLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 12.0).isActive = true
+        self.headerLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 12.0).isActive = true
+
+        self.contentView.addSubview(self.expandImageView)
+        self.expandImageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -12.0).isActive = true
         self.expandImageView.topAnchor.constraint(equalTo: self.headerLabel.topAnchor).isActive = true
-        self.expandImageView.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -12.0).isActive = true
         self.expandImageView.heightAnchor.constraint(equalToConstant: 28.0).isActive = true
         self.expandImageView.widthAnchor.constraint(equalToConstant: 28.0).isActive = true
         
@@ -129,6 +138,20 @@ fileprivate extension SongView {
         self.artistLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 4.0).isActive = true
         self.artistLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor).isActive = true
         self.artistLabel.trailingAnchor.constraint(equalTo: self.titleLabel.trailingAnchor).isActive = true
-        self.artistLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8.0).isActive = true
+        
+        // - Single line divider
+        let divider = UIView.init()
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.backgroundColor = UIColor.sharedBlue.withAlphaComponent(0.5)
+        
+        self.addSubview(divider)
+        divider.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor).isActive = true
+        divider.topAnchor.constraint(equalTo: self.artistLabel.bottomAnchor, constant: 8.0).isActive = true
+        divider.trailingAnchor.constraint(equalTo: self.artistLabel.trailingAnchor).isActive = true
+        divider.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
+
+        let bottom = divider.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8.0)
+        bottom.priority = .defaultLow
+        bottom.isActive = true
     }
 }

@@ -61,7 +61,7 @@ class ErrorView: UIView {
 fileprivate extension ErrorView {
     func layout() {
         self.addSubview(self.messageLabel)
-        self.messageLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -20.0).isActive = true
+        self.messageLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -40.0).isActive = true
         self.messageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         self.messageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1303E28C21D9BBB300FC5394 /* wvslib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1303E28B21D9BBB300FC5394 /* wvslib.framework */; };
 		133C280921D012C6008551A5 /* MemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C280821D012C6008551A5 /* MemberView.swift */; };
 		133C280B21D0198B008551A5 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C280A21D0198B008551A5 /* HomePresenter.swift */; };
 		133C280D21D019B0008551A5 /* HomeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C280C21D019B0008551A5 /* HomeDelegate.swift */; };
@@ -32,19 +33,16 @@
 		13B588C421CB597600B562BD /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588C321CB597600B562BD /* HeaderView.swift */; };
 		13B588C621CB686300B562BD /* EventsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588C521CB686300B562BD /* EventsDataSource.swift */; };
 		13B588CA21CB6A6D00B562BD /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588C921CB6A6D00B562BD /* Requests.swift */; };
-		13B588EE21CB8BA500B562BD /* wvslib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B588ED21CB8BA500B562BD /* wvslib.framework */; };
-		13B588EF21CB8BA500B562BD /* wvslib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 13B588ED21CB8BA500B562BD /* wvslib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		13B588F321CB93CB00B562BD /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588F221CB93CB00B562BD /* ErrorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		13B588E921CB8AB600B562BD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				13B588EF21CB8BA500B562BD /* wvslib.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,6 +50,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1303E28B21D9BBB300FC5394 /* wvslib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = wvslib.framework; sourceTree = "<group>"; };
 		133C280821D012C6008551A5 /* MemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberView.swift; sourceTree = "<group>"; };
 		133C280A21D0198B008551A5 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		133C280C21D019B0008551A5 /* HomeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDelegate.swift; sourceTree = "<group>"; };
@@ -73,14 +72,12 @@
 		13B588AA21CAB0D100B562BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		13B588AC21CAB2B500B562BD /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		13B588AF21CAB56000B562BD /* SharedCommon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCommon.swift; sourceTree = "<group>"; };
-		13B588B121CAD45A00B562BD /* Events.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Events.playground; path = Playgrounds/Events.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		13B588B321CAEA9100B562BD /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		13B588BD21CAF6E100B562BD /* EventsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDelegate.swift; sourceTree = "<group>"; };
 		13B588BF21CAF76900B562BD /* EventsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsPresenter.swift; sourceTree = "<group>"; };
 		13B588C321CB597600B562BD /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		13B588C521CB686300B562BD /* EventsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDataSource.swift; sourceTree = "<group>"; };
 		13B588C921CB6A6D00B562BD /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
-		13B588ED21CB8BA500B562BD /* wvslib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = wvslib.framework; path = Frameworks/wvslib.framework; sourceTree = "<group>"; };
 		13B588F221CB93CB00B562BD /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,13 +86,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B588EE21CB8BA500B562BD /* wvslib.framework in Frameworks */,
+				1303E28C21D9BBB300FC5394 /* wvslib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1302058C21D99F65001043B0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		133C281021D0379F008551A5 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,10 +111,10 @@
 		133D84E521C8CD0400B3300A = {
 			isa = PBXGroup;
 			children = (
+				1303E28B21D9BBB300FC5394 /* wvslib.framework */,
 				13B588AE21CAB35500B562BD /* Common */,
 				133C281021D0379F008551A5 /* Custom */,
 				13B588A721CAA9B400B562BD /* DataSources */,
-				13B588B121CAD45A00B562BD /* Events.playground */,
 				133D84F021C8CD0400B3300A /* Fusion */,
 				133D850D21C8CF2100B3300A /* Model */,
 				133D850C21C8CF1600B3300A /* Networking */,
@@ -120,7 +124,7 @@
 				133D850921C8CF0400B3300A /* ViewControllers */,
 				13B588BC21CAF6C000B562BD /* ViewDelegates */,
 				13B588B221CAEA6A00B562BD /* Views */,
-				13B588ED21CB8BA500B562BD /* wvslib.framework */,
+				1302058C21D99F65001043B0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -461,12 +465,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = R4LH8X8EHM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
+					/Users/Chuck/iOSDevelopment/Frameworks,
 				);
 				INFOPLIST_FILE = Fusion/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -475,9 +480,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wvs.Fusion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Fusion Development";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -485,13 +490,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = R4LH8X8EHM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
+					/Users/Chuck/iOSDevelopment/Frameworks,
 				);
 				INFOPLIST_FILE = Fusion/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -500,9 +506,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wvs.Fusion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Fusion Distribution";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -7,10 +7,10 @@
 //
 
 import UIKit
+import MessageUI
 import wvslib
 
-class HomeViewController: UIViewController {
-
+class HomeViewController: UIViewController, Notifiable {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return UIDevice.current.sizeClass == .compact ? .portrait : .all
     }
@@ -59,14 +59,14 @@ class HomeViewController: UIViewController {
         collection.backgroundColor = UIColor.clear
         collection.dataSource = self
         collection.delegate = self
-        (collection.collectionViewLayout as? UICollectionViewFlowLayout)?.scrollDirection = .horizontal
+        (collection.collectionViewLayout as? UICollectionViewFlowLayout)?.scrollDirection = .vertical
         return collection
     }()
     
     // - Bottom button menu
     fileprivate lazy var buttonMenu: ButtonMenu = {
         let color = UIColor.sharedBlue
-        let size = CGSize.init(width: 32.0, height: 32.0)
+        let size = CGSize.init(width: 34.0, height: 34.0)
         
         // - Events button
         let eventImage = UIImage.init(named: "event")?.resizedImage(newSize: size)?.maskedImage(with: color) ?? UIImage.init()
@@ -79,6 +79,10 @@ class HomeViewController: UIViewController {
         // - Song list button
         let songImage = UIImage.init(named: "songs")?.resizedImage(newSize: size)?.maskedImage(with: color) ?? UIImage.init()
         let songButton = ButtonMenuItem("Song List", songImage)
+        
+        // - Media button
+        let mediaImage = UIImage.init(named: "camera")?.resizedImage(newSize: size)?.maskedImage(with: color) ?? UIImage.init()
+        let mediaButton = ButtonMenuItem("Media Gallery", mediaImage)
         
         let view = ButtonMenu.init(withItems: [eventsButton, songButton, contactButton])
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -106,6 +110,9 @@ class HomeViewController: UIViewController {
             self.memberCollectionView.reloadData()
         }
     }
+    
+    // - Notiable
+    var notifyContainer: UIView?
     
     // - Presenter
     let presenter: HomePresenter
@@ -147,7 +154,7 @@ class HomeViewController: UIViewController {
         // - Create zoom effect
         self.headerView.transform = CGAffineTransform.init(scaleX: 0, y: 0)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             UIView.animate(withDuration: 0.25, animations: {
                 self.headerView.transform = CGAffineTransform.init(scaleX: 1.0, y: 1.0)
             }, completion: { (finished) in
@@ -297,6 +304,81 @@ extension HomeViewController: HomeDelegate {
         bioView.nameLabel.text = memberInfo.name
         
         self.present(bioView, animated: true)
+    }
+    
+    func showContact() {
+        let sheet = UIAlertController.init(title: "Contact Fusion", message: "", preferredStyle: .actionSheet)
+        let call = UIAlertAction.init(title: "Call", style: .default) { (action) in
+            if let url = URL.init(string: "tel://512-655-3330"), UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+        }
+        
+        let email = UIAlertAction.init(title: "Email", style: .default) { (action) in
+            if MFMailComposeViewController.canSendMail() {
+                let controller = MFMailComposeViewController()
+                controller.mailComposeDelegate = self
+                
+                controller.setSubject("Hello Fusion")
+                controller.setToRecipients(["fusion@fusionatx.com"])
+                controller.setMessageBody("\n\n\nSent from the Fusion app", isHTML: false)
+                self.present(controller, animated: true)
+            }
+            else {
+                let alert = UIAlertController.init(title: "Email Account", message: "You must set up an email account on this device to use this feature.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction.init(title: "OK", style: .default))
+            }
+        }
+        
+        let cancel = UIAlertAction.init(title: "Cancel", style: .cancel)
+        
+        sheet.addAction(call)
+        sheet.addAction(email)
+        sheet.addAction(cancel)
+        self.present(sheet, animated: true)
+    }
+}
+
+// - MARK: MFMailComposeDelegate
+
+extension HomeViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        var message: String?
+        switch result {
+            case .failed:
+                message = "This email could not be sent. \(error?.localizedDescription ?? "")"
+            
+            case .sent:
+                fallthrough
+            
+            default:
+                break
+        }
+        
+        self.hideSpinner()
+        
+        // - Notify the user that the email was sent
+        controller.dismiss(animated: true) {
+            if let message = message {
+                let alert = UIAlertController.init(title: "Contact Fusion", message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            else  {
+                var message = ""
+                if result == .sent {
+                    message = "Your message was successfully sent to Fusion."
+                }
+                else if result == .saved {
+                    message = "Your message was saved and was not sent to Fusion."
+                }
+                else if result == .cancelled {
+                    message = "Your message was cancelled and was not sent to Fusion."
+                }
+
+                self.notify(message: message, 2.5, UIColor.sharedBlue)
+            }
+        }
     }
 }
 

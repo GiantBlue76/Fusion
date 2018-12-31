@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import UserNotifications
 import wvslib
 
 // - Event type for use within the table view
@@ -180,7 +181,8 @@ class EventsViewController: UIViewController, Shareable, Notifiable, UIPopoverPr
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "eventCell")
         self.tableView.separatorStyle = .none
         self.tableView.separatorInset = .zero
-
+        self.tableView.allowsSelection = false
+        
         // - Create autolayout constraints
         self.layout()
         
@@ -319,6 +321,51 @@ extension EventsViewController: EventsDelegate {
         self.shareData = data
         self.mimeType = mimeType
         self.share()
+    }
+    
+    func scheduleReminder(_ date: String, _ location: String) {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            if let error = error {
+                log.error("Local notifications could not be enabled. \(error).")
+                self.notify(message: "Local notifications could not be enabled. \(error).", 2.5, UIColor.sharedBlue)
+            }
+        
+            guard granted == true else {
+                log.warning("Local notifications are not permitted.")
+                return
+            }
+            
+            let weekday = Date.localWeekday(fromDate: date)
+            let month = Date.localMonth(fromDate: date)
+            let day = Date.dayFromUTCString(date)
+            let year = Date.localYearFromDate(utc: date)
+            let time = Date.localTimeFromDate(utc: date)
+
+            // - Reminder date set to two days prior to the event
+            guard let reminderDate = Date.dateFromUTCString(utc: date)?.addingTimeInterval(-1 * 24 * 60 * 60) else { return }
+
+            // - Clear current reminders
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            
+            // - Register for reminders
+            let content = UNMutableNotificationContent()
+            content.title = "Fusion Show Reminder"
+            content.body = "Fusion has a show on \(weekday) \(month) \(day) \(year) at \(time) at \(location)"
+            content.sound = UNNotificationSound.default
+            
+            let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: reminderDate)
+            let trigger = UNCalendarNotificationTrigger.init(dateMatching: components, repeats: false)
+            let request = UNNotificationRequest.init(identifier: "GIG_REMINDER", content: content, trigger: trigger)
+            
+            // - Schedule the reminder
+            let center = UNUserNotificationCenter.current()
+            center.add(request) { (error) in
+                if let error = error {
+                    self.notify(message: "The event reminder could not be scheduled. \(error)", 2.5, UIColor.sharedBlue)
+                }
+            }
+        }
     }
 }
 

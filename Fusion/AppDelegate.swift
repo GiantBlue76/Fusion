@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 import wvslib
 
 @UIApplicationMain
@@ -29,6 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // - Present the main window
         window?.makeKeyAndVisible()
+        
+        // - Allow for notifications to be handled
+        UNUserNotificationCenter.current().delegate = self
         
         // Override point for customization after application launch.
         return true
@@ -57,3 +61,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+// - Notifications
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        guard let nav = self.window?.rootViewController as? UINavigationController, let topView = nav.topViewController else {
+            return
+        }
+        
+        let body = notification.request.content.body
+        (topView as? Notifiable & UIViewController)?.notify(message: body, 5, UIColor.red)
+
+        completionHandler(.sound)
+    }
+}

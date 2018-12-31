@@ -9,7 +9,7 @@
 import UIKit
 import wvslib
 
-class SongsViewController: UIViewController {
+class SongsViewController: UIViewController, Notifiable {
 
     // - Song table
     fileprivate lazy var tableView: UITableView = {
@@ -31,12 +31,16 @@ class SongsViewController: UIViewController {
     // - Presenter
     fileprivate let presenter: SongsPresenter
     
+    // MARK: - Notifiable
+    var notifyContainer: UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "Fusion Song List"
         self.view.backgroundColor = UIColor.white
         
+        self.tableView.allowsSelection = false
         self.tableView.register(SongHeaderView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "songCell")
         self.tableView.alpha = 0.0
@@ -61,18 +65,7 @@ class SongsViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    }    
 }
 
 // MARK: - UITableView
@@ -128,7 +121,7 @@ extension SongsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50.0
+        return 54.0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -136,8 +129,6 @@ extension SongsViewController: UITableViewDelegate, UITableViewDataSource {
 
         view.headerLabel.text = self.sections[section]
         view.contentView.backgroundColor = UIColor.sharedBlue
-        view.contentView.layer.borderColor = UIColor.darkGray.cgColor
-        view.contentView.layer.borderWidth = 1.0
         view.tapHandler = { [weak self] in
             self?.presenter.toggleExpand(section)
         }
