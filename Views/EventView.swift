@@ -30,29 +30,6 @@ class EventView: UIView {
         return view
     }()
 
-    fileprivate lazy var mapButton: UIButton = {
-        let button = UIButton.init(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.borderColor = UIColor.darkGray.cgColor
-        button.layer.borderWidth = 1.0
-        button.setImage(UIImage.init(named: "maps"), for: .normal)
-        button.backgroundColor = UIColor.white
-        button.addTarget(self, action: #selector(handleMap), for: .touchUpInside)
-        return button
-    }()
-    
-    fileprivate lazy var shareButton: UIButton = {
-        let button = UIButton.init(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.borderColor = UIColor.darkGray.cgColor
-        button.layer.borderWidth = 1.0
-        button.setImage(CommonImages.share.image?.resizedImage(newSize: CGSize.init(width: 32.0, height: 32.0))?.maskedImage(with: UIColor.sharedBlue), for: .normal)
-        button.contentMode = .center
-        button.backgroundColor = UIColor.white
-        button.addTarget(self, action: #selector(share), for: .touchUpInside)
-        return button
-    }()
-    
     lazy var posterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -111,12 +88,6 @@ class EventView: UIView {
         return label
     }()
     
-    // - Map button handler
-    var mapButtonHandler: ((_ type: MapButtonType) -> ())?
-    
-    // - Share button handler
-    var shareButtonHandler: ((_ event: ShareableEvent) -> ())?
-    
     init() {
         super.init(frame: .zero)
         self.layout()
@@ -128,32 +99,7 @@ class EventView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // - Make the map button circular along with the share button
-        self.mapButton.layer.cornerRadius = self.mapButton.bounds.width / 2.0
-        self.shareButton.layer.cornerRadius = self.shareButton.bounds.width / 2.0
-    }
-    
-    // - Map button handler
-    @objc func handleMap() {
-        self.mapButtonHandler?(UIApplication.shared.supportedMaps())
-    }
-    
-    // - Share button handler
-    @objc func share() {
-        self.mapButton.isHidden = true
-        self.shareButton.isHidden = true
-        if let data = self.snapshot().pngData() {
-            self.shareButtonHandler?((data, "image/png"))
-        }
-        
-        self.mapButton.isHidden = false
-        self.shareButton.isHidden = false
-    }
+    }    
 }
 
 // MARK: - Private
@@ -165,7 +111,7 @@ fileprivate extension EventView {
         self.posterImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 12.0).isActive = true
         self.posterImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8.0).isActive = true
         self.posterImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8.0).isActive = true
-        self.posterImageView.heightAnchor.constraint(equalToConstant: 120.0).isActive = true
+        self.posterImageView.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
         
         self.addSubview(self.venueImageView)
         self.venueImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -4.0).isActive = true
@@ -201,19 +147,5 @@ fileprivate extension EventView {
         self.addressLabel.leadingAnchor.constraint(equalTo: self.summaryLabel.leadingAnchor).isActive = true
         self.addressLabel.trailingAnchor.constraint(equalTo: self.summaryLabel.trailingAnchor).isActive = true
         self.addressLabel.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor, constant: -8.0).isActive = true
-        
-        // - Add the map button
-        self.addSubview(self.mapButton)
-        self.mapButton.centerYAnchor.constraint(equalTo: self.containerView.topAnchor, constant: -8.0).isActive = true
-        self.mapButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -74.0).isActive = true
-        self.mapButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
-        self.mapButton.widthAnchor.constraint(equalToConstant: 48.0).isActive = true
-        
-        // - Add the share button
-        self.addSubview(self.shareButton)
-        self.shareButton.centerYAnchor.constraint(equalTo: self.mapButton.centerYAnchor, constant: 0).isActive = true
-        self.shareButton.leadingAnchor.constraint(equalTo: self.mapButton.trailingAnchor, constant: 10.0).isActive = true
-        self.shareButton.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
-        self.shareButton.widthAnchor.constraint(equalToConstant: 48.0).isActive = true
     }
 }

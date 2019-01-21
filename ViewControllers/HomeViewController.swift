@@ -96,7 +96,7 @@ class HomeViewController: UIViewController, Notifiable {
     fileprivate lazy var slideInTransitionDelegate: UIViewControllerTransitioningDelegate = {
         let delegate = SlideInPresentationManager.init()
         delegate.direction = .bottom
-        delegate.percentage = 0.5
+        delegate.percentage = 0.6
         return delegate
     }()
     
@@ -238,7 +238,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         content.imageView.backgroundColor = UIColor.black
-        content.imageView.fetchImage(self.members[indexPath.item].thumbUrl, true, nil, nil)
+        content.imageView.fetchImage(self.members[indexPath.item].thumbUrl, false)
         return cell
     }
     

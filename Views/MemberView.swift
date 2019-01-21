@@ -28,23 +28,7 @@ class MemberView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // - Round the image
-        //self.imageView.layer.cornerRadius = self.imageView.bounds.width / 2.0
-
-//        // - Draw the shadow for the image
-//        let layer = self.imageView.layer
-//        layer.masksToBounds = false
-//        layer.shadowOffset = CGSize.zero
-//        layer.shadowColor = UIColor.init(white: 0.0, alpha: 0.5).cgColor
-//        layer.shadowOpacity = 1.0
-//        layer.shadowRadius = 1.0
-//        layer.shadowPath = UIBezierPath.init(rect: layer.bounds).cgPath
-    }
+    }    
 }
 
 // MARK: - Private

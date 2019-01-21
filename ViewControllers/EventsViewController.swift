@@ -48,20 +48,14 @@ class EventsViewController: UIViewController, Shareable, Notifiable, UIPopoverPr
         let header = UIView.init()
         header.translatesAutoresizingMaskIntoConstraints = false
         header.backgroundColor = UIColor.white
-        header.layer.borderColor = UIColor.darkGray.cgColor
-        header.layer.borderWidth = 0.5
+        header.layer.borderColor = UIColor.sharedBlue.cgColor
+        header.layer.borderWidth = 1.5
         
         let eventView = EventView()
         eventView.translatesAutoresizingMaskIntoConstraints = false
         eventView.backgroundColor = UIColor.clear
         eventView.tag = 100
         eventView.dateBoxView.backgroundColor = UIColor.white
-        eventView.mapButtonHandler = { [weak self] (type) in
-            self?.presenter.map(type, 0)
-        }
-        eventView.shareButtonHandler = { [weak self] (shareable) in
-            self?.presenter.share(shareable, 0)
-        }
         
         // - Add the event to the header
         header.addSubview(eventView)
@@ -94,6 +88,8 @@ class EventsViewController: UIViewController, Shareable, Notifiable, UIPopoverPr
         return table
     }()
     
+    fileprivate let refresh = UIRefreshControl()
+    
     // - The presenter for the view
     fileprivate let presenter: EventsPresenter
 
@@ -101,6 +97,7 @@ class EventsViewController: UIViewController, Shareable, Notifiable, UIPopoverPr
     fileprivate var events = [ViewEvent]() {
         didSet {
             self.tableView.reloadData()
+            self.refresh.endRefreshing()
         }
     }
     
@@ -114,6 +111,10 @@ class EventsViewController: UIViewController, Shareable, Notifiable, UIPopoverPr
             self.configureEventView(nextEvent, eventView)
         }
     }
+    
+    // - The actions view
+    fileprivate var overlayView: UIView?
+    fileprivate var actionsView: EventActionsView?
     
     // MARK: - Shareable
     var supportedShareTypes: [ShareType] = [.email, .sms]
@@ -138,7 +139,7 @@ class EventsViewController: UIViewController, Shareable, Notifiable, UIPopoverPr
     
     init(withPresenter presenter: EventsPresenter) {
         self.presenter = presenter
-
+        
         // - Call the super and assign the delegate
         super.init(nibName: nil, bundle: nil)
         self.presenter.delegate = self
@@ -176,32 +177,35 @@ class EventsViewController: UIViewController, Shareable, Notifiable, UIPopoverPr
 
         self.view.backgroundColor = UIColor.white
         self.title = "Upcoming Shows"
+        
+        self.refresh.tintColor = UIColor.red
+        self.refresh.addTarget(self, action: #selector(refreshEvents), for: .valueChanged)
+        self.tableView.refreshControl = self.refresh
 
         // - Register the cells for the table
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "eventCell")
-        self.tableView.separatorStyle = .none
+        self.tableView.separatorStyle = .singleLine
         self.tableView.separatorInset = .zero
-        self.tableView.allowsSelection = false
         
         // - Create autolayout constraints
         self.layout()
         
-        DispatchQueue.main.async {
-            // - Load the events
-            self.presenter.loadEvents()
+        Shared.dataCache.clear {
+            DispatchQueue.main.async {
+                // - Load the events
+                self.presenter.loadEvents()
+            }
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - Actions
+    @objc func refreshEvents() {
+        self.presenter.refresh()
     }
-    */
-
+    
+    @objc func tapped(_ sender: UITapGestureRecognizer) {
+        self.dismissActions()
+    }
 }
 
 // MARK: - UITableViewDatasource, UITableViewDelegate
@@ -217,6 +221,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath)
+        cell.selectionStyle = .none
         
         // - Get the event for the index and configure the cell
         self.configureCell(cell, self.events[indexPath.row])
@@ -225,6 +230,10 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.presenter.select(indexPath.row)
     }
     
     // - Private
@@ -244,20 +253,6 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
             eventView.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
             eventView.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
             eventView.bottomAnchor.constraint(equalTo: cell.bottomAnchor, constant: -20.0).isActive = true
-            eventView.mapButtonHandler = { [weak self] (type) in
-                guard let indexPath = self?.tableView.indexPath(for: cell) else {
-                    log.warning("The index path could not be found for the cell to invoke the map button.")
-                    return
-                }
-                self?.presenter.map(type, indexPath.row + 1)
-            }
-            eventView.shareButtonHandler = { [weak self] (shareable) in
-                guard let indexPath = self?.tableView.indexPath(for: cell) else {
-                    log.warning("The index path could not be found for the cell to invoke the map button.")
-                    return
-                }
-                self?.presenter.share(shareable, indexPath.row + 1)
-            }
         }
 
         // - Handle map selection
@@ -274,8 +269,8 @@ extension EventsViewController: EventsDelegate {
         self.headerView.isHidden = false
         
         // - Remove the first event (most current) and use that for the header
-        var listEvents = events
-        self.nextEvent = listEvents.removeFirst()
+        let listEvents = events
+        self.nextEvent = listEvents.first
         self.events = listEvents
     }
     
@@ -304,7 +299,6 @@ extension EventsViewController: EventsDelegate {
             }))
             
             alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-            
             self.present(alert, animated: true)
         }
         else if let google = googleMap {
@@ -365,6 +359,16 @@ extension EventsViewController: EventsDelegate {
                     self.notify(message: "The event reminder could not be scheduled. \(error)", 2.5, UIColor.sharedBlue)
                 }
             }
+        }
+    }
+    
+    func showActions(_ presenter: EventActionsPresenter) {
+        self.actions(presenter)
+    }
+    
+    func showBanner(_ message: String) {
+        DispatchQueue.main.async {
+            self.notify(message: message, 5.0, UIColor.sharedBlue)
         }
     }
 }
@@ -475,5 +479,83 @@ fileprivate extension EventsViewController {
         nsas.append(NSMutableAttributedString.init(string: "\n\(event.month) \(event.day)", attributes: attributed))
         nsas.append(NSMutableAttributedString.init(string: "\n\(event.time)", attributes: normal))
         eventView.dateLabel.attributedText = nsas
+    }
+    
+    func actions(_ presenter: EventActionsPresenter) {
+        guard let actionsView = Bundle.main.loadNibNamed("EventActionsView", owner: nil, options: nil)?.first as? EventActionsView else {
+            log.warning("Unable to load the event actions view.")
+            return
+        }
+        
+        let overlay = UIView.init()
+        overlay.translatesAutoresizingMaskIntoConstraints = false
+        overlay.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        overlay.alpha = 0
+        
+        self.view.addSubview(overlay)
+        overlay.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        overlay.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        overlay.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        overlay.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        
+        actionsView.translatesAutoresizingMaskIntoConstraints = false
+        actionsView.alpha = 0
+        actionsView.presenter = presenter
+        actionsView.mapButtonHandler = { [weak self] (type) in
+            guard let selected = self?.tableView.indexPathForSelectedRow?.row else {
+                return
+            }
+            
+            self?.dismissActions()
+            self?.presenter.map(type, selected)
+        }
+        
+        actionsView.shareButtonHandler = { [weak self] in
+            guard let indexPath = self?.tableView.indexPathForSelectedRow, let cell = self?.tableView.cellForRow(at: indexPath), let data = cell.viewWithTag(100)?.snapshot().pngData() else {
+                return
+            }
+            
+            self?.dismissActions()
+            self?.presenter.share((data, "img/png"), indexPath.row)
+        }
+        
+        actionsView.calendarButtonHandler = { [weak self] in
+            guard let indexPath = self?.tableView.indexPathForSelectedRow else {
+                return
+            }
+            
+            self?.dismissActions()
+            self?.presenter.addToCalendar(indexPath.row)
+        }
+        
+        // - Display the view
+        self.view.addSubview(actionsView)
+        actionsView.widthAnchor.constraint(equalTo: overlay.widthAnchor, multiplier: UIDevice.current.sizeClass == .compact ? 0.8 : 0.6).isActive = true
+        actionsView.centerXAnchor.constraint(equalTo: overlay.centerXAnchor).isActive = true
+        actionsView.centerYAnchor.constraint(equalTo: overlay.centerYAnchor).isActive = true
+        
+        UIView.animate(withDuration: 0.15) {
+            overlay.alpha = 1.0
+            actionsView.alpha = 1.0
+        }
+        
+        self.overlayView = overlay
+        self.actionsView = actionsView
+        
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(tapped(_:)))
+        tap.numberOfTapsRequired = 1
+        overlay.addGestureRecognizer(tap)
+    }
+
+    func dismissActions() {
+        UIView.animate(withDuration: 0.15, animations: {
+            self.actionsView?.alpha = 0
+            self.overlayView?.alpha = 0
+        }) { (finished) in
+            self.actionsView?.removeFromSuperview()
+            self.overlayView?.removeFromSuperview()
+            self.actionsView = nil
+            self.overlayView = nil
+        }
     }
 }

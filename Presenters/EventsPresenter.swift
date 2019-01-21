@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import EventKit
 import wvslib
 
 class EventsPresenter {
@@ -126,7 +127,83 @@ class EventsPresenter {
         let day = Date.dayFromUTCString(start)
         let year = Date.yearFromUTCString(start)
         
-        self.delegate?.shareEvent("\(event.summary) \(month)/\(day)/\(year)", event.summary, data: shareableEvent.data, mimeType: "image/png")
+        var address = ""
+        if let venue = self.venues.filter({ return $0.id == event.venueId }).first {
+            address = "\(venue.address), \(venue.city), \(venue.state)"
+        }
+        
+        self.delegate?.shareEvent("\(event.summary) \(month)/\(day)/\(year)\n\(address)", event.summary, data: shareableEvent.data, mimeType: "image/png")
+    }
+    
+    func select(_ index: Int) {
+        let event = self.events[index]
+        guard let venue = self.venues.filter({ return $0.id == event.venueId }).first else {
+            log.warning("The venue ID could not be loaded")
+            return
+        }
+        
+        self.delegate?.showActions(EventActionsPresenter.init(withInfo: (event, venue)))
+    }
+    
+    func addToCalendar(_ index: Int) {
+        let bandEvent = self.events[index]
+        let start = Date.dateFromUTCString(utc: String(bandEvent.start.dropLast(3)))
+        let end = Date.dateFromUTCString(utc: String(bandEvent.end.dropLast(3)))
+        
+        let eventStore = EKEventStore()
+        
+        // - Check for duplicates
+        guard let startDate = start, let endDate = end else {
+            log.warning("The start and end date for the event were invalid.")
+            return
+        }
+        
+        let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: nil)
+        let existingEvents = eventStore.events(matching: predicate)
+        if existingEvents.contains(where: { return $0.title == bandEvent.summary }) {
+            self.delegate?.showBanner("This event has already been added to your calendar.")
+            return
+        }
+
+        eventStore.requestAccess(to: .event, completion: { (granted, error) in
+            if (granted) && (error == nil) {
+                let event = EKEvent(eventStore: eventStore)
+                
+                event.title = bandEvent.summary
+                event.startDate = start
+                event.endDate = end
+                event.notes = bandEvent.summary
+                event.calendar = eventStore.defaultCalendarForNewEvents
+                
+                // - Add an alarm for one hour prior
+                if let alarmDate = start?.addingTimeInterval(-(60 * 60 * 2)) {
+                    event.addAlarm(EKAlarm.init(absoluteDate: alarmDate))
+                }
+
+                do {
+                    try eventStore.save(event, span: .thisEvent)
+                    self.delegate?.showBanner("The event was successfully added to your calendar.")
+                }
+                catch {
+                    log.error("The event could not be added to the calendar. \(error).")
+                    self.delegate?.showBanner("The event could not be added to your calendar. \(error).")
+                }
+            }
+            else {
+                log.warning("The event could not be added to the calendar")
+                if granted == false {
+                    self.delegate?.showBanner("Events cannot be added to your calendar until you allow access to your calendar.  Go to the settings app and enable calendar access for the Fusion app.")
+                }
+            }
+        })
+    }
+    
+    func refresh() {
+        Shared.dataCache.clear {
+            DispatchQueue.main.async {
+                self.loadEvents()
+            }
+        }
     }
 }
 

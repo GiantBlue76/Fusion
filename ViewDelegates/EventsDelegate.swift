@@ -25,4 +25,10 @@ protocol EventsDelegate: Waitable {
     
     // - Schedule a local notification
     func scheduleReminder(_ date: String, _ location: String)
+    
+    // - Show the action view
+    func showActions(_ presenter: EventActionsPresenter)
+    
+    // - Shows a banner
+    func showBanner(_ message: String)
 }

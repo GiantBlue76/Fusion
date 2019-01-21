@@ -25,7 +25,7 @@ struct EventsRequest: Request {
         return .get
     }
     
-    func onSuccess(_ data: Data) -> Data {
+    func convertData(_ data: Data) -> Data? {
         return data
     }
 }
@@ -46,7 +46,7 @@ struct SongsRequest: Request {
         return .get
     }
     
-    func onSuccess(_ data: Data) -> Data {
+    func convertData(_ data: Data) -> Data? {
         return data
     }
 }
@@ -67,7 +67,7 @@ struct MembersRequest: Request {
         return .get
     }
     
-    func onSuccess(_ data: Data) -> Data {
+    func convertData(_ data: Data) -> Data? {
         return data
     }
 }

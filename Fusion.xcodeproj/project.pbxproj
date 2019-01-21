@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1304403721F422BC00D53148 /* EventActionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1304403621F422BC00D53148 /* EventActionsView.xib */; };
+		1304403921F42A5F00D53148 /* EventActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304403821F42A5F00D53148 /* EventActionsView.swift */; };
+		1304403B21F42C5200D53148 /* EventActionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304403A21F42C5200D53148 /* EventActionsPresenter.swift */; };
+		1304403D21F42C7400D53148 /* EventActionsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304403C21F42C7400D53148 /* EventActionsDelegate.swift */; };
 		133C280921D012C6008551A5 /* MemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C280821D012C6008551A5 /* MemberView.swift */; };
 		133C280B21D0198B008551A5 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C280A21D0198B008551A5 /* HomePresenter.swift */; };
 		133C280D21D019B0008551A5 /* HomeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133C280C21D019B0008551A5 /* HomeDelegate.swift */; };
@@ -50,6 +54,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1304403621F422BC00D53148 /* EventActionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventActionsView.xib; sourceTree = "<group>"; };
+		1304403821F42A5F00D53148 /* EventActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventActionsView.swift; sourceTree = "<group>"; };
+		1304403A21F42C5200D53148 /* EventActionsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventActionsPresenter.swift; sourceTree = "<group>"; };
+		1304403C21F42C7400D53148 /* EventActionsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventActionsDelegate.swift; sourceTree = "<group>"; };
 		133C280821D012C6008551A5 /* MemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberView.swift; sourceTree = "<group>"; };
 		133C280A21D0198B008551A5 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		133C280C21D019B0008551A5 /* HomeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDelegate.swift; sourceTree = "<group>"; };
@@ -168,6 +176,7 @@
 				13B588BF21CAF76900B562BD /* EventsPresenter.swift */,
 				133C280A21D0198B008551A5 /* HomePresenter.swift */,
 				13A3AA2D21D456AB00D8D5E0 /* SongsPresenter.swift */,
+				1304403A21F42C5200D53148 /* EventActionsPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -221,6 +230,8 @@
 				13B588F221CB93CB00B562BD /* ErrorView.swift */,
 				133C280821D012C6008551A5 /* MemberView.swift */,
 				13A3AA3321D5215C00D8D5E0 /* SongView.swift */,
+				1304403621F422BC00D53148 /* EventActionsView.xib */,
+				1304403821F42A5F00D53148 /* EventActionsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -231,6 +242,7 @@
 				13B588BD21CAF6E100B562BD /* EventsDelegate.swift */,
 				133C280C21D019B0008551A5 /* HomeDelegate.swift */,
 				13A3AA3121D456D800D8D5E0 /* SongsDelegate.swift */,
+				1304403C21F42C7400D53148 /* EventActionsDelegate.swift */,
 			);
 			path = ViewDelegates;
 			sourceTree = "<group>";
@@ -305,6 +317,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1304403721F422BC00D53148 /* EventActionsView.xib in Resources */,
 				133D84FE21C8CD0500B3300A /* LaunchScreen.storyboard in Resources */,
 				133D84FB21C8CD0500B3300A /* Assets.xcassets in Resources */,
 			);
@@ -364,12 +377,15 @@
 				13B588BE21CAF6E100B562BD /* EventsDelegate.swift in Sources */,
 				133C280D21D019B0008551A5 /* HomeDelegate.swift in Sources */,
 				13A3AA3221D456D800D8D5E0 /* SongsDelegate.swift in Sources */,
+				1304403D21F42C7400D53148 /* EventActionsDelegate.swift in Sources */,
 				13A3AA2121D3D1DD00D8D5E0 /* BioViewController.swift in Sources */,
 				13B588B021CAB56000B562BD /* SharedCommon.swift in Sources */,
+				1304403921F42A5F00D53148 /* EventActionsView.swift in Sources */,
 				133D84F221C8CD0400B3300A /* AppDelegate.swift in Sources */,
 				13A3AA1D21D0C80F00D8D5E0 /* SharedNavigationController.swift in Sources */,
 				133C280B21D0198B008551A5 /* HomePresenter.swift in Sources */,
 				13B588F321CB93CB00B562BD /* ErrorView.swift in Sources */,
+				1304403B21F42C5200D53148 /* EventActionsPresenter.swift in Sources */,
 				13B588C021CAF76900B562BD /* EventsPresenter.swift in Sources */,
 				13B588B421CAEA9100B562BD /* EventView.swift in Sources */,
 				13A3AA2E21D456AB00D8D5E0 /* SongsPresenter.swift in Sources */,
