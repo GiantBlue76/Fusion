@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   wvslib:
-    :commit: c8a6851862030fadac79cbe85a575647e7c78127
+    :commit: 3d50035112cb7ca3063c7e2da9f1f49bd0ead568
     :git: https://github.com/giantblue76/wvslib.git
 
 SPEC CHECKSUMS:
@@ -19,4 +19,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 25d3bf685c750fffe857e9f6d20da73a519b4d2e
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0

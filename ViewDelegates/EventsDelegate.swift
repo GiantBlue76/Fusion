@@ -9,7 +9,7 @@
 import Foundation
 import wvslib
 
-protocol EventsDelegate: Waitable {
+protocol EventsDelegate: class {
     
     // - Notify the view that the events loaded successfully
     func eventsLoaded(_ events: [ViewEvent])

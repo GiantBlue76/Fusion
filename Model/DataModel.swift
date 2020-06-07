@@ -45,8 +45,8 @@ struct Venue: Codable {
     let address: String
     let city: String
     let state: String
-//    let lat: Double
-//    let lon: Double
+    let lat: Double
+    let lon: Double
 }
 
 // MARK: - Event

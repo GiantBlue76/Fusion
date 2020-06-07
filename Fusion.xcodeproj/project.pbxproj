@@ -19,6 +19,11 @@
 		133D84F221C8CD0400B3300A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133D84F121C8CD0400B3300A /* AppDelegate.swift */; };
 		133D84FB21C8CD0500B3300A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 133D84FA21C8CD0500B3300A /* Assets.xcassets */; };
 		133D84FE21C8CD0500B3300A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 133D84FC21C8CD0500B3300A /* LaunchScreen.storyboard */; };
+		136F722F22317A5800513C24 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136F722E22317A5800513C24 /* UIApplication+Extensions.swift */; };
+		136F723122317A9D00513C24 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136F723022317A9D00513C24 /* UIFont+Extensions.swift */; };
+		136F723322317ADF00513C24 /* Themeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136F723222317ADF00513C24 /* Themeable.swift */; };
+		136F723522317C5100513C24 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136F723422317C5100513C24 /* Shared.swift */; };
+		136F723822319D8A00513C24 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 136F723722319D8A00513C24 /* Events.storyboard */; };
 		13A3AA1D21D0C80F00D8D5E0 /* SharedNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A3AA1C21D0C80F00D8D5E0 /* SharedNavigationController.swift */; };
 		13A3AA2121D3D1DD00D8D5E0 /* BioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A3AA2021D3D1DD00D8D5E0 /* BioViewController.swift */; };
 		13A3AA2C21D4569E00D8D5E0 /* SongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A3AA2B21D4569E00D8D5E0 /* SongsViewController.swift */; };
@@ -29,7 +34,6 @@
 		13B588A921CAA9CB00B562BD /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588A821CAA9CB00B562BD /* DataModel.swift */; };
 		13B588AB21CAB0D100B562BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588AA21CAB0D100B562BD /* HomeViewController.swift */; };
 		13B588AD21CAB2B500B562BD /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588AC21CAB2B500B562BD /* EventsViewController.swift */; };
-		13B588B021CAB56000B562BD /* SharedCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588AF21CAB56000B562BD /* SharedCommon.swift */; };
 		13B588B421CAEA9100B562BD /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588B321CAEA9100B562BD /* EventView.swift */; };
 		13B588BE21CAF6E100B562BD /* EventsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588BD21CAF6E100B562BD /* EventsDelegate.swift */; };
 		13B588C021CAF76900B562BD /* EventsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B588BF21CAF76900B562BD /* EventsPresenter.swift */; };
@@ -68,6 +72,11 @@
 		133D84FA21C8CD0500B3300A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		133D84FD21C8CD0500B3300A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		133D84FF21C8CD0500B3300A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		136F722E22317A5800513C24 /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
+		136F723022317A9D00513C24 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
+		136F723222317ADF00513C24 /* Themeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themeable.swift; sourceTree = "<group>"; };
+		136F723422317C5100513C24 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
+		136F723722319D8A00513C24 /* Events.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		13A3AA1C21D0C80F00D8D5E0 /* SharedNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedNavigationController.swift; sourceTree = "<group>"; };
 		13A3AA2021D3D1DD00D8D5E0 /* BioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioViewController.swift; sourceTree = "<group>"; };
 		13A3AA2B21D4569E00D8D5E0 /* SongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsViewController.swift; sourceTree = "<group>"; };
@@ -78,7 +87,6 @@
 		13B588A821CAA9CB00B562BD /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		13B588AA21CAB0D100B562BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		13B588AC21CAB2B500B562BD /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
-		13B588AF21CAB56000B562BD /* SharedCommon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCommon.swift; sourceTree = "<group>"; };
 		13B588B321CAEA9100B562BD /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		13B588BD21CAF6E100B562BD /* EventsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDelegate.swift; sourceTree = "<group>"; };
 		13B588BF21CAF76900B562BD /* EventsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsPresenter.swift; sourceTree = "<group>"; };
@@ -122,6 +130,8 @@
 		133D84E521C8CD0400B3300A = {
 			isa = PBXGroup;
 			children = (
+				136F723622319D7A00513C24 /* Storyboards */,
+				136F722D22317A4000513C24 /* Extensions */,
 				13B588AE21CAB35500B562BD /* Common */,
 				133C281021D0379F008551A5 /* Custom */,
 				13B588A721CAA9B400B562BD /* DataSources */,
@@ -184,6 +194,7 @@
 		133D850B21C8CF1100B3300A /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				136F723222317ADF00513C24 /* Themeable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -204,6 +215,23 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		136F722D22317A4000513C24 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				136F722E22317A5800513C24 /* UIApplication+Extensions.swift */,
+				136F723022317A9D00513C24 /* UIFont+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		136F723622319D7A00513C24 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				136F723722319D8A00513C24 /* Events.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		13B588A721CAA9B400B562BD /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,7 +245,7 @@
 		13B588AE21CAB35500B562BD /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				13B588AF21CAB56000B562BD /* SharedCommon.swift */,
+				136F723422317C5100513C24 /* Shared.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -318,6 +346,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1304403721F422BC00D53148 /* EventActionsView.xib in Resources */,
+				136F723822319D8A00513C24 /* Events.storyboard in Resources */,
 				133D84FE21C8CD0500B3300A /* LaunchScreen.storyboard in Resources */,
 				133D84FB21C8CD0500B3300A /* Assets.xcassets in Resources */,
 			);
@@ -350,7 +379,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Fusion/Pods-Fusion-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Fusion/Pods-Fusion-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/wvslib/wvslib.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -359,7 +388,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fusion/Pods-Fusion-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Fusion/Pods-Fusion-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -369,6 +398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				136F723522317C5100513C24 /* Shared.swift in Sources */,
 				13B588AB21CAB0D100B562BD /* HomeViewController.swift in Sources */,
 				13B588C421CB597600B562BD /* HeaderView.swift in Sources */,
 				13B588CA21CB6A6D00B562BD /* Requests.swift in Sources */,
@@ -379,11 +409,13 @@
 				13A3AA3221D456D800D8D5E0 /* SongsDelegate.swift in Sources */,
 				1304403D21F42C7400D53148 /* EventActionsDelegate.swift in Sources */,
 				13A3AA2121D3D1DD00D8D5E0 /* BioViewController.swift in Sources */,
-				13B588B021CAB56000B562BD /* SharedCommon.swift in Sources */,
 				1304403921F42A5F00D53148 /* EventActionsView.swift in Sources */,
 				133D84F221C8CD0400B3300A /* AppDelegate.swift in Sources */,
 				13A3AA1D21D0C80F00D8D5E0 /* SharedNavigationController.swift in Sources */,
+				136F722F22317A5800513C24 /* UIApplication+Extensions.swift in Sources */,
 				133C280B21D0198B008551A5 /* HomePresenter.swift in Sources */,
+				136F723122317A9D00513C24 /* UIFont+Extensions.swift in Sources */,
+				136F723322317ADF00513C24 /* Themeable.swift in Sources */,
 				13B588F321CB93CB00B562BD /* ErrorView.swift in Sources */,
 				1304403B21F42C5200D53148 /* EventActionsPresenter.swift in Sources */,
 				13B588C021CAF76900B562BD /* EventsPresenter.swift in Sources */,

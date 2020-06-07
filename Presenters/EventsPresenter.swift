@@ -22,18 +22,16 @@ class EventsPresenter {
     fileprivate var venues = [Venue]()
     
     func loadEvents() {
-        let ds = EventsDataSource()
-
-        self.delegate?.showSpinner("Loading Events...")
+        (self.delegate as? Waitable)?.showSpinner("Loading shows...")
         
-        // - Fetch the venues first
-        ds.fetchVenues({ (venues) in
-            self.venues = venues
+        Current.events().getEvents { result in
+            (self.delegate as? Waitable)?.hideSpinner()
             
-            // - Fetch events and handle success or error
-            ds.fetchEvents({ (events) in
-                self.delegate?.hideSpinner()
+            switch result {
+            case .failure(let error):
+                Current.log().error(error.localizedDescription)
                 
+            case .success(let events):
                 // - Map the events to view event data
                 self.events = events
                 let viewEvents = self.events.map({ (event) -> ViewEvent in
@@ -76,18 +74,7 @@ class EventsPresenter {
                     let venue = self.venues.filter({ return $0.id == firstEvent.venueId }).first?.name ?? ""
                     self.delegate?.scheduleReminder(start, venue)
                 }
-                
-            }) { (error) in
-                self.delegate?.hideSpinner()
-                
-                log.error(error)
-                self.delegate?.eventsLoadFailed("Oops! Something went wrong attempting to load the events.\n\n \(error)")
             }
-        }) { (error) in
-            self.delegate?.hideSpinner()
-            
-            log.error(error)
-            self.delegate?.eventsLoadFailed("Oops! Something went wrong attempting to load the events.\n\n \(error)")
         }
     }
     
